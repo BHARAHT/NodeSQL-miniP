@@ -6,6 +6,9 @@ const app=express();
 const port=3000;
 const { faker } = require('@faker-js/faker');
 const path =require('path');
+const methodOverride = require("method-override");
+app.use(methodOverride("_method"));
+// Create a connection to the database
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.static(path.join(__dirname,"public")));
@@ -52,4 +55,23 @@ app.get('/users/:id',(req,res)=>{
         res.render('show',{user:result[0]});
     });
 
+});
+app.get('/users/:id/edit',(req,res)=>{
+    const {id}=req.params;
+    let q=`select * from users where id=?`;
+    connection.query(q,[id],(err,result)=>{
+        if(err) throw err;
+        res.render('edit',{user:result[0]});
+    });
+});
+
+//update 
+app.put('/users/:id',(req,res)=>{
+    const {id}=req.params;
+    const {name,email,age,country}=req.body;
+    let q=`update users set name=?,email=?,age=?,country=? where id=?`;
+    connection.query(q,[name,email,age,country,id],(err,result)=>{
+        if(err) throw err;
+        res.redirect(`/users/${id}`);
+    });
 });
