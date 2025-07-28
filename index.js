@@ -1,3 +1,5 @@
+//run sql in terminal cmd
+// & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p
 const express=require('express');
 const mysql = require('mysql2');
 const app=express();
@@ -27,4 +29,27 @@ app.get('/users',(req,res)=>{
 
 app.listen(port,()=>{
     console.log(`Server is running on http://localhost:${port}`);
+});
+
+app.get('/users/new',(req,res)=>{
+    res.render('new');
+});
+
+app.post('/users',(req,res)=>{
+    const {name,email,age,country}=req.body;
+    let q=`insert into users (name,email,age,country) values (?,?,?,?)`;
+connection.query(q,[name,email,age,country],(err,result)=>{
+    if(err) throw err;
+    res.redirect('/users');
+
+});
+});
+app.get('/users/:id',(req,res)=>{
+    const {id}=req.params;
+    let q=`select * from users where id=?`;
+    connection.query(q,[id],(err,result)=>{
+        if(err) throw err;
+        res.render('show',{user:result[0]});
+    });
+
 });

@@ -6,15 +6,16 @@
 </head>
 <body>
     <h1>Display all Users</h1>
-
-    <table>
+    <h2><a href="/users/new">➕ Add User</a>
+</h2>
+    <table border="1" cellpadding="10" cellspacing="0">
          <tr>
       <th>ID</th><th>Name</th><th>Email</th><th>Age</th><th>Country</th>
     </tr>
     <% users.forEach(user => { %>
       <tr>
         <td><%= user.id %></td>
-        <td><%= user.name %></td>
+        <td><a href="/users/<%= user.id %>"><%= user.name %></a></td>
         <td><%= user.email %></td>
         <td><%= user.age %></td>
         <td><%= user.country %></td>
