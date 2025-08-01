@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+</head>
+<body>
+    <h1>Edit User: <%= user.name %></h1>
+    <form method="POST" action="/users/<%= user.id %>?_method=PUT">
+        <input placeholder="Full Name" name="name" value="<%= user.name %>" required>
+        <br><br>
+        <input placeholder="Email" name="email" type="email" value="<%= user.email %>" required>
+        <br><br>
+        <input placeholder="Age" name="age" type="number" value="<%= user.age %>" required>
+        <br><br>
+        <input placeholder="Country" name="country" value="<%= user.country %>" required>
+        <br><br>
+        <button>Update User</button>
+    </form>
+</body>
+</html>

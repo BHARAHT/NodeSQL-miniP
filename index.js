@@ -75,3 +75,12 @@ app.put('/users/:id',(req,res)=>{
         res.redirect(`/users/${id}`);
     });
 });
+
+app.post('/users/:id/delete',(req,res)=>{
+    const {id}=req.params;
+    let q=`delete from users where id=?`;
+    connection.query(q,[id],(err,result)=>{
+        if(err) throw err;
+        res.redirect('/users');
+    });
+});
